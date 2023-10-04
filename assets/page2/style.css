@@ -2,25 +2,26 @@ form {
     display: flex;
     align-items: center; 
 }
-.container {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
+#form input[type="text"] {
+    font-size: 20px; 
 }
-
-.content {
-    
-}
-
-.bg-right-image {
-    width: 300px;
-    margin-left: 650px;
-}
-
 .logo {
-
-    width: 70px;
+    width: 150px;
   
 }
+.image {
+    display: flex;
+    width: 300px;
+    margin-left: auto;
+  }
 
-
+  #videos {
+    display: flex;
+    justify-content: center; 
+    align-items: center; 
+    flex-wrap: wrap; 
+    background-color: #fff;
+    gap: 5px; 
+    min-height: 40vh; 
+}
+  

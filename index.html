@@ -22,46 +22,53 @@
       
                   Menu open: "hidden", Menu closed: "block"
                 -->
-                <svg class="block h-6 w-6" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" aria-hidden="true">
-                  <path stroke-linecap="round" stroke-linejoin="round" d="M3.75 6.75h16.5M3.75 12h16.5m-16.5 5.25h16.5" />
-                </svg>
-                <!--
-                  Icon when menu is open.
-      
-                  Menu open: "block", Menu closed: "hidden"
-                -->
-                <svg class="hidden h-6 w-6" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" aria-hidden="true">
-                  <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" />
-                </svg>
-              </button>
-            </div>
-            <div class="flex flex-1 items-center justify-center sm:items-stretch sm:justify-start">
-              <div class="flex flex-shrink-0 items-center">
-                <img class="h-8 w-auto" src="https://tailwindui.com/img/logos/mark.svg?color=indigo&shade=500" alt="Your Company">
-              </div>
-              <div class="hidden sm:ml-6 sm:block">
-                <div class="flex space-x-4">
-                  <!-- Current: "bg-gray-900 text-white", Default: "text-gray-300 hover:bg-gray-700 hover:text-white" -->
-                  <a href="#" class="text-gray-300 hover:bg-gray-700 hover:text-white rounded-md px-3 py-2 text-sm font-medium">Recipe Finder</a>
-                    <div class="text-gray-300 hover:bg-gray-700 hover:text-white rounded-md px-3 py-2 text-sm ">
-                        <div class="search-bar">
-                            <input type="text" id="search-input" placeholder="Search for recipes...">
-                            <button id="search-button">Search</button>
-                        </div>
-                    </div>
-                </div>
-              </div>
-            </div>
-      
-                </div> 
-              </div>
-            </div>
-          </div>
-        </div>
-    <main>
-
-  
-  
+                <nav class="bg-gray-800">
+                  <div class="px-2 sm:px-6 lg:px-8">
+                      <div class="relative flex h-16 items-center justify-between">
+              
+                          <!-- Mobile menu button -->
+                          <div class="absolute inset-y-0 left-0 flex items-center sm:hidden">
+                              <button type="button" class="relative inline-flex items-center justify-center rounded-md p-2 text-gray-400 hover:bg-gray-700 hover:text-white focus:outline-none focus:ring-2 focus:ring-inset focus:ring-white" aria-controls="mobile-menu" aria-expanded="false">
+                                  <span class="absolute -inset-0.5"></span>
+                                  <span class="sr-only">Open main menu</span>
+                                  <!-- Icon when menu is closed -->
+                                  <svg class="block h-6 w-6" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" aria-hidden="true">
+                                      <path stroke-linecap="round" stroke-linejoin="round" d="M3.75 6.75h16.5M3.75 12h16.5m-16.5 5.25h16.5" />
+                                  </svg>
+                                  <!-- Icon when menu is open -->
+                                  <svg class="hidden h-6 w-6" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" aria-hidden="true">
+                                      <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" />
+                                  </svg>
+                              </button>
+                          </div>
+              
+                          <div class="flex flex-1 items-center justify-center sm:items-stretch sm:justify-start">
+                              <!-- Company Logo -->
+                              <div class="flex flex-shrink-0 items-center">
+                                  <img class="h-8 w-auto" src="https://tailwindui.com/img/logos/mark.svg?color=indigo&shade=500" alt="Your Company">
+                              </div>
+              
+                              <!-- Navigation Links -->
+                              <div class="hidden sm:ml-6 sm:block">
+                                  <div class="flex space-x-4">
+                                      <!-- Current: "bg-gray-900 text-white", Default: "text-gray-300 hover:bg-gray-700 hover:text-white" -->
+                                      <a href="#" class="text-gray-300 hover:bg-gray-700 hover:text-white rounded-md px-3 py-2 text-sm font-medium">Recipe Finder</a>
+              
+                                      <!-- Search Bar -->
+                                      <div class="text-gray-300 hover:bg-gray-700 hover:text-white rounded-md px-3 py-2 text-sm">
+                                          <div class="search-bar">
+                                              <input type="text" id="search-input" placeholder="Search for recipes...">
+                                              <button id="search-button">Search</button>
+                                          </div>
+                                      </div>
+                                  </div>
+                              </div>
+                          </div>
+              
+                      </div>
+                  </div>
+              </nav>
+              
   <!-- tailwind.config.js
 module.exports = {
   theme: {
@@ -181,7 +188,7 @@ module.exports = {
               <h3 class="-mx-2 -my-3 flow-root">
                 <!-- Expand/collapse section button -->
                 <button type="button" class="flex w-full items-center justify-between bg-white px-2 py-3 text-gray-400 hover:text-gray-500" aria-controls="filter-section-mobile-1" aria-expanded="false">
-                  <span class="font-medium text-gray-900">Category</span>
+                  <span class="font-medium text-gray-900">Allergies</span>
                   <span class="ml-6 flex items-center">
                     <!-- Expand icon, show/hide based on section open state. -->
                     <svg class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
@@ -199,23 +206,23 @@ module.exports = {
                 <div class="space-y-6">
                   <div class="flex items-center">
                     <input id="filter-mobile-category-0" name="category[]" value="new-arrivals" type="checkbox" class="h-4 w-4 rounded border-gray-300 text-indigo-600 focus:ring-indigo-500">
-                    <label for="filter-mobile-category-0" class="ml-3 min-w-0 flex-1 text-gray-500">PSAH</label>
+                    <label for="filter-mobile-category-0" class="ml-3 min-w-0 flex-1 text-gray-500">Dairy</label>
                   </div>
                   <div class="flex items-center">
                     <input id="filter-mobile-category-1" name="category[]" value="sale" type="checkbox" class="h-4 w-4 rounded border-gray-300 text-indigo-600 focus:ring-indigo-500">
-                    <label for="filter-mobile-category-1" class="ml-3 min-w-0 flex-1 text-gray-500">Sale</label>
+                    <label for="filter-mobile-category-1" class="ml-3 min-w-0 flex-1 text-gray-500">Nuts</label>
                   </div>
                   <div class="flex items-center">
                     <input id="filter-mobile-category-2" name="category[]" value="travel" type="checkbox" checked class="h-4 w-4 rounded border-gray-300 text-indigo-600 focus:ring-indigo-500">
-                    <label for="filter-mobile-category-2" class="ml-3 min-w-0 flex-1 text-gray-500">Travel</label>
+                    <label for="filter-mobile-category-2" class="ml-3 min-w-0 flex-1 text-gray-500">Wheat</label>
                   </div>
                   <div class="flex items-center">
                     <input id="filter-mobile-category-3" name="category[]" value="organization" type="checkbox" class="h-4 w-4 rounded border-gray-300 text-indigo-600 focus:ring-indigo-500">
-                    <label for="filter-mobile-category-3" class="ml-3 min-w-0 flex-1 text-gray-500">Organization</label>
+                    <label for="filter-mobile-category-3" class="ml-3 min-w-0 flex-1 text-gray-500">Soy</label>
                   </div>
                   <div class="flex items-center">
                     <input id="filter-mobile-category-4" name="category[]" value="accessories" type="checkbox" class="h-4 w-4 rounded border-gray-300 text-indigo-600 focus:ring-indigo-500">
-                    <label for="filter-mobile-category-4" class="ml-3 min-w-0 flex-1 text-gray-500">Accessories</label>
+                    <label for="filter-mobile-category-4" class="ml-3 min-w-0 flex-1 text-gray-500">Gluten</label>
                   </div>
                 </div>
               </div>
@@ -225,7 +232,7 @@ module.exports = {
               <h3 class="-mx-2 -my-3 flow-root">
                 <!-- Expand/collapse section button -->
                 <button type="button" class="flex w-full items-center justify-between bg-white px-2 py-3 text-gray-400 hover:text-gray-500" aria-controls="filter-section-mobile-2" aria-expanded="false">
-                  <span class="font-medium text-gray-900">Size</span>
+                  <span class="font-medium text-gray-900">Cuisine</span>
                   <span class="ml-6 flex items-center">
                     <!-- Expand icon, show/hide based on section open state. -->
                     <svg class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
@@ -243,27 +250,27 @@ module.exports = {
                 <div class="space-y-6">
                   <div class="flex items-center">
                     <input id="filter-mobile-size-0" name="size[]" value="2l" type="checkbox" class="h-4 w-4 rounded border-gray-300 text-indigo-600 focus:ring-indigo-500">
-                    <label for="filter-mobile-size-0" class="ml-3 min-w-0 flex-1 text-gray-500">2L</label>
+                    <label for="filter-mobile-size-0" class="ml-3 min-w-0 flex-1 text-gray-500">Italian</label>
                   </div>
                   <div class="flex items-center">
                     <input id="filter-mobile-size-1" name="size[]" value="6l" type="checkbox" class="h-4 w-4 rounded border-gray-300 text-indigo-600 focus:ring-indigo-500">
-                    <label for="filter-mobile-size-1" class="ml-3 min-w-0 flex-1 text-gray-500">6L</label>
+                    <label for="filter-mobile-size-1" class="ml-3 min-w-0 flex-1 text-gray-500">Thai</label>
                   </div>
                   <div class="flex items-center">
                     <input id="filter-mobile-size-2" name="size[]" value="12l" type="checkbox" class="h-4 w-4 rounded border-gray-300 text-indigo-600 focus:ring-indigo-500">
-                    <label for="filter-mobile-size-2" class="ml-3 min-w-0 flex-1 text-gray-500">12L</label>
+                    <label for="filter-mobile-size-2" class="ml-3 min-w-0 flex-1 text-gray-500">Indian</label>
                   </div>
                   <div class="flex items-center">
                     <input id="filter-mobile-size-3" name="size[]" value="18l" type="checkbox" class="h-4 w-4 rounded border-gray-300 text-indigo-600 focus:ring-indigo-500">
-                    <label for="filter-mobile-size-3" class="ml-3 min-w-0 flex-1 text-gray-500">18L</label>
+                    <label for="filter-mobile-size-3" class="ml-3 min-w-0 flex-1 text-gray-500">Mexican</label>
                   </div>
                   <div class="flex items-center">
                     <input id="filter-mobile-size-4" name="size[]" value="20l" type="checkbox" class="h-4 w-4 rounded border-gray-300 text-indigo-600 focus:ring-indigo-500">
-                    <label for="filter-mobile-size-4" class="ml-3 min-w-0 flex-1 text-gray-500">20L</label>
+                    <label for="filter-mobile-size-4" class="ml-3 min-w-0 flex-1 text-gray-500">Chinese</label>
                   </div>
                   <div class="flex items-center">
                     <input id="filter-mobile-size-5" name="size[]" value="40l" type="checkbox" checked class="h-4 w-4 rounded border-gray-300 text-indigo-600 focus:ring-indigo-500">
-                    <label for="filter-mobile-size-5" class="ml-3 min-w-0 flex-1 text-gray-500">40L</label>
+                    <label for="filter-mobile-size-5" class="ml-3 min-w-0 flex-1 text-gray-500">Greek</label>
                   </div>
                 </div>
               </div>
@@ -489,7 +496,20 @@ module.exports = {
 
           <!-- Product grid -->
           <div class="lg:col-span-3">
-            <!-- Your content -->
+          <!-- Your content -->
+            <div>
+              <a href="#" class="block px-2 py-3" style="font-family: Georgia, serif; font-size: 25px; font-weight: bold; color: black; text-decoration: double underline;">Diet</a>
+
+            </div>
+
+            <div>
+              <a href="#" class="block px-2 py-3" style="font-family: Georgia, serif; font-size: 25px; font-weight: bold; color: black; text-decoration: double underline;">Allergies</a>
+            </div>
+
+            <div>
+              <a href="#"class="block px-2 py-3" style="font-family: Georgia, serif; font-size: 25px; font-weight: bold; color: black; text-decoration: double underline;">Cuisine</a>
+            </div>
+         
           </div>
         </div>
       </section>
@@ -497,17 +517,18 @@ module.exports = {
   </div>
 </div>
     </main>
-    
-    <footer>
-        <p>&copy; 2023 Recipe Finder</p>
-    </footer>
+
+    <footer style="background-color: indigoshade=500; height: 60px;">
+      <p>&copy; 2023 Recipe Finder</p>
+  </footer>
+  
 
     <script src="assets/script.js"></script> 
 </body>
 </html>
 
 
-  
+   
 <!-- notifications Button -->
  <!-- <div class="absolute inset-y-0 right-0 flex items-center pr-2 sm:static sm:inset-auto sm:ml-6 sm:pr-0">
               <button type="button" class="relative rounded-full bg-gray-800 p-1 text-gray-400 hover:text-white focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-gray-800">
@@ -516,4 +537,7 @@ module.exports = {
                 <svg class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" aria-hidden="true">
                   <path stroke-linecap="round" stroke-linejoin="round" d="M14.857 17.082a23.848 23.848 0 005.454-1.31A8.967 8.967 0 0118 9.75v-.7V9A6 6 0 006 9v.75a8.967 8.967 0 01-2.312 6.022c1.733.64 3.56 1.085 5.455 1.31m5.714 0a24.255 24.255 0 01-5.714 0m5.714 0a3 3 0 11-5.714 0" />
                 </svg>
-              </button> -->
+              </button>  -->
+
+              <!-- Image -->
+              <!-- <img src="assets/images/Recpie-finder-image.jpg" alt="An image of Fruit Nuts Vegtables and salmon nicely placed together"> -->
