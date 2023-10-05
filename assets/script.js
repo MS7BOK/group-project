@@ -4,7 +4,8 @@ const searchBtn= document.getElementById("search-button")
 const searchInput= document.getElementById("search-input")
 const recipeContainer= document.querySelector(".recipes-api")
 const recipes = 
-const SPOONACULAR_API_KEY = "Yf6fde6b800mshe44c4d3edfcf41ap1ee82cjsn03452dcc2b8b";
+//const SPOONACULAR_API_KEY = "Yf6fde6b800mshe44c4d3edfcf41ap1ee82cjsn03452dcc2b8b";
+const SPOONACULAR_API_KEY = "f6fde6b800mshe44c4d3edfcf41ap1ee82cjsn03452dcc2b8b";
 const cardContainer = document.getElementById('card-container');
 
 // Object to store selected filters for each filter section- this for checkboxes
@@ -14,14 +15,38 @@ const selectedFilters = {
     'filter-section-mobile-2': { size: [] }
 };
 
-async function returnRecipes(ingredients) {
-    const RecipeId = "1087629";
+// SEARCH FUNCTIONS
+
+async function searchRecipes(input) {
+    const input = "burger";
+    const dietOptions = "";
+    const intoleranceOptions = "";
+    const typeOptions = "";
+    const cuisineOptions = "";
+    const url = 'https://spoonacular-recipe-food-nutrition-v1.p.rapidapi.com/recipes/search?query=${input}&diet=${dietOptions}&intolerances=${intoleranceOptions}&number=10&type=${typeOptions}&cuisine=${cuisineOptions}';
+
+    try {
+	    const response = await fetch(url, options);
+	    const data = await response.json();
+	    console.log(data.id);
+        return data
+        
+    } catch (error) {
+	    console.error(error);
+    }
+}
+
+// Take Recipe ID, return object
+async function returnRecipes(data) {
+    //const RecipeId = "1087629";
+    const dataId = data.id
     
-    const url= `https://spoonacular-recipe-food-nutrition-v1.p.rapidapi.com/recipes/findByIngredients?ingredients=${ingredients}&number=5&ignorePantry=true&ranking=1`;
+    //const url= `https://spoonacular-recipe-food-nutrition-v1.p.rapidapi.com/recipes/findByIngredients?ingredients=${ingredients}&number=5&ignorePantry=true&ranking=1`;
+    const url = 'https://spoonacular-recipe-food-nutrition-v1.p.rapidapi.com/recipes/${dataId}/information?includeNutrition=true';
+    
     const options = {
         method: 'GET',
         headers: {
-            'X-RapidAPI-Key': 'f6fde6b800mshe44c4d3edfcf41ap1ee82cjsn03452dcc2b8b',
             'X-RapidAPI-Host': 'spoonacular-recipe-food-nutrition-v1.p.rapidapi.com'
             "X-RapidAPI-Key": SPOONACULAR_API_KEY
         }
@@ -33,10 +58,11 @@ async function returnRecipes(ingredients) {
     }
 
     const data = await response.json();
-    console.log(data);
-    displayRecipe(data)
+    console.log(recipeData);
+    return recipeData
+    //displayRecipe(data)
 }
- function displayRecipe(data){
+ /*function displayRecipe(data){
 
     for (let i = 0; i < data.length; i++) {
         
@@ -58,14 +84,16 @@ async function returnRecipes(ingredients) {
         cardBody.append(img)
         card.append(cardHeader, cardBody)
         recipeContainer.append(card)
-    }
+    }*/
  }
 
+// Search Button Click Detection
 searchBtn.addEventListener("click", ()=>{
-    const userIngredients= searchInput.value
-    returnRecipes(userIngredients)
+    const userQuery= searchInput.value
+    searchRecipes(userQuery)
 })
 
+// ?????
 recipeContainer.addEventListener("click", ()=>{
     const title= this.event.target.textContent
     console.log(title);
@@ -200,4 +228,36 @@ filterSections.forEach((sectionId, index) => {
             handleCheckboxChange(sectionId, filterType, checkbox);
         });
     });
+});
+
+
+// Video search
+$(document).ready(function(){
+    var API_KEY = "AIzaSyDsy-oCrYD9qGw9tkzrSQ_Q1OX7QVU8oog";
+    var video = '';
+/*
+    $("#form").submit(function (event) {
+        event.preventDefault();
+        //var search = $("#search").val();
+        var search = 
+        videoSearch(API_KEY, search, 1);
+    });
+*/
+
+// NEED FUNCTION TO HIDE SEARCH RESULTS AND DISPLAY SELECTED RECIPE ALONG WITH SELECTED YOUTUBE VIDEO    
+    
+    function videoSearch(key, search, maxResults) {
+        // Clear previous content
+        $("#videos").empty();
+
+        $.get("https://www.googleapis.com/youtube/v3/search?key=" + key + "&type=video&part=snippet&maxResults=" + maxResults + "&q=" + search, function(data) {
+            console.log(data);
+            data.items.forEach(item => {
+                video = `
+                <iframe width="250" height="250" src="http://www.youtube.com/embed/${item.id.videoId}" frameborder="0" allowfullscreen></iframe>
+                `;
+                $("#videos").append(video);
+            });
+        });
+    }
 });
