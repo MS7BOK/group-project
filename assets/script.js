@@ -3,13 +3,7 @@ const SPOONACULAR_ENDPOINT = "https://spoonacular-recipe-food-nutrition-v1.p.rap
 const searchBtn= document.getElementById("search-button")
 const searchInput= document.getElementById("search-input")
 const recipeContainer= document.querySelector(".recipes-api")
-const recipes = [
-    {
-        title: "Spaghetti Carbonara",
-        ingredients: ["spaghetti", "egg", "bacon", "parmesan", "garlic"],
-        instructions: "..."
-    },
-]
+const recipes = 
 
 async function returnRecipes(ingredients) {
     const RecipeId = "1087629";
