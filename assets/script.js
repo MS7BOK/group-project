@@ -172,9 +172,10 @@ function createCard(recipe) {
     const card = document.createElement('div');
     card.className = 'card';
 
+    console.log(recipe.image);
     const cardImage = document.createElement('img');
     cardImage.className = 'card-image';
-    cardImage.src = recipe.image;
+    cardImage.src = "https://spoonacular.com/recipeImages/" + recipe.image;
     cardImage.alt = 'Recipe Image';
     card.appendChild(cardImage);
 
