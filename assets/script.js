@@ -37,7 +37,7 @@ async function searchRecipes(input) {
 	    const response = await fetch(url, options);
 	    const data = await response.json();
 	    console.log(data);
-        return data;
+        displayResults(data);
         
     } catch (error) {
 	    console.error(error);
@@ -51,7 +51,7 @@ async function returnRecipes(data, index) {
     const dataId = data.results[index].id;
     
     //const url= `https://spoonacular-recipe-food-nutrition-v1.p.rapidapi.com/recipes/findByIngredients?ingredients=${ingredients}&number=5&ignorePantry=true&ranking=1`;
-    const url = 'https://spoonacular-recipe-food-nutrition-v1.p.rapidapi.com/recipes/${dataId}/information?includeNutrition=true';
+    const url = "https://spoonacular-recipe-food-nutrition-v1.p.rapidapi.com/recipes/" + dataId + "}/information?includeNutrition=true";
     
     
 
@@ -92,8 +92,8 @@ async function returnRecipes(data, index) {
 
 // Search Button Click Detection
 searchBtn.addEventListener("click", ()=>{
-    const userQuery= searchInput.value
-    searchRecipes(userQuery)
+    const userQuery= searchInput.value;
+    searchRecipes(userQuery);
 })
 
 // Function for click on recipe card
@@ -105,6 +105,8 @@ recipeContainer.addEventListener("click", ()=>{
     const title= this.event.target.textContent
     console.log(title);
 })
+
+/*
 function displayResults(recipes) {
     recipes.forEach(recipe => {
         const recipeDiv = document.createElement('div');
@@ -118,7 +120,7 @@ function displayResults(recipes) {
         `;
         resultsDiv.appendChild(recipeDiv);
     });
-}
+}*/
 
 // Function to load selected filters from local storage
 function loadSelectedFilters() {
@@ -196,6 +198,22 @@ function createCard(recipe) {
     return card;
 }
 
+
+function displayResults(data) {
+    console.log(data.results);
+    if (data.results && Array.isArray(data.results)) {
+        // Goes through the API results and create cards for each item
+        data.results.forEach(recipe => {
+            const card = createCard(recipe); 
+            // Add the card to the card container
+            cardContainer.appendChild(card);
+        });
+}}
+
+
+
+
+/*
 // Fetch data from the API and display the cards
 fetch('https://spoonacular-recipe-food-nutrition-v1.p.rapidapi.com/recipes/complexSearch', {
     headers: {
@@ -219,7 +237,7 @@ fetch('https://spoonacular-recipe-food-nutrition-v1.p.rapidapi.com/recipes/compl
 })
 .catch(error => {
     console.error('Error fetching data:', error);
-});
+});*/
 
 
 // Attach event listeners to all sets of checkboxes
