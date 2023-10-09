@@ -3,7 +3,7 @@ const SPOONACULAR_ENDPOINT = "https://spoonacular-recipe-food-nutrition-v1.p.rap
 const searchBtn= document.getElementById("search-button")
 const searchInput= document.getElementById("search-input")
 const recipeContainer= document.querySelector(".recipes-api")
-const recipes = 
+const recipes = "";
 //const SPOONACULAR_API_KEY = "Yf6fde6b800mshe44c4d3edfcf41ap1ee82cjsn03452dcc2b8b";
 const SPOONACULAR_API_KEY = "f6fde6b800mshe44c4d3edfcf41ap1ee82cjsn03452dcc2b8b";
 const cardContainer = document.getElementById('card-container');
@@ -15,21 +15,29 @@ const selectedFilters = {
     'filter-section-mobile-2': { size: [] }
 };
 
+const options = {
+    method: 'GET',
+    headers: {
+        'X-RapidAPI-Host': 'spoonacular-recipe-food-nutrition-v1.p.rapidapi.com',
+        "X-RapidAPI-Key": SPOONACULAR_API_KEY
+    }
+};
+
 // SEARCH FUNCTIONS
 
 async function searchRecipes(input) {
-    const input = "burger";
+    //input = "burger";
     const dietOptions = "";
     const intoleranceOptions = "";
     const typeOptions = "";
     const cuisineOptions = "";
-    const url = 'https://spoonacular-recipe-food-nutrition-v1.p.rapidapi.com/recipes/search?query=${input}&diet=${dietOptions}&intolerances=${intoleranceOptions}&number=10&type=${typeOptions}&cuisine=${cuisineOptions}';
+    const url = "https://spoonacular-recipe-food-nutrition-v1.p.rapidapi.com/recipes/search?query=" + input + "&diet=" + dietOptions + "&intolerances=" + intoleranceOptions + "&number=10&type=" + typeOptions + "&cuisine=" + cuisineOptions;
 
     try {
 	    const response = await fetch(url, options);
 	    const data = await response.json();
-	    console.log(data.id);
-        return data
+	    console.log(data);
+        return data;
         
     } catch (error) {
 	    console.error(error);
@@ -37,27 +45,22 @@ async function searchRecipes(input) {
 }
 
 // Take Recipe ID, return object
-async function returnRecipes(data) {
+async function returnRecipes(data, index) {
     //const RecipeId = "1087629";
-    const dataId = data.id
+    index = 3;
+    const dataId = data.results[index].id;
     
     //const url= `https://spoonacular-recipe-food-nutrition-v1.p.rapidapi.com/recipes/findByIngredients?ingredients=${ingredients}&number=5&ignorePantry=true&ranking=1`;
     const url = 'https://spoonacular-recipe-food-nutrition-v1.p.rapidapi.com/recipes/${dataId}/information?includeNutrition=true';
     
-    const options = {
-        method: 'GET',
-        headers: {
-            'X-RapidAPI-Host': 'spoonacular-recipe-food-nutrition-v1.p.rapidapi.com'
-            "X-RapidAPI-Key": SPOONACULAR_API_KEY
-        }
-    };
+    
 
     const response = await fetch(url, options);
     if (!response.ok) {
         throw new Error("Failed to fetch the recipe.");
     }
 
-    const data = await response.json();
+    data = await response.json();
     console.log(recipeData);
     return recipeData
     //displayRecipe(data)
@@ -85,13 +88,17 @@ async function returnRecipes(data) {
         card.append(cardHeader, cardBody)
         recipeContainer.append(card)
     }*/
- }
+ 
 
 // Search Button Click Detection
 searchBtn.addEventListener("click", ()=>{
     const userQuery= searchInput.value
     searchRecipes(userQuery)
 })
+
+// Function for click on recipe card
+
+
 
 // ?????
 recipeContainer.addEventListener("click", ()=>{
