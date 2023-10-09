@@ -169,21 +169,26 @@ function constructFilters(sectionId, filterType) {
 
 // Function to create a card element based on recipe data
 function createCard(recipe) {
-    const card = document.createElement('div');
-    card.className = 'card';
+    const card = document.createElement('a');
+    card.className = 'flex flex-col items-center bg-white border border-gray-200 rounded-lg shadow md:flex-row md:max-w-xl hover:bg-gray-100';
+    card.href = './index2.html'
 
     console.log(recipe.image);
     const cardImage = document.createElement('img');
-    cardImage.className = 'card-image';
+    cardImage.className = 'card-image object-cover w-full rounded-t-lg h-96 md:h-auto md:w-48 md:rounded-none md:rounded-l-lg';
     cardImage.src = "https://spoonacular.com/recipeImages/" + recipe.image;
     cardImage.alt = 'Recipe Image';
     card.appendChild(cardImage);
 
-    const cardContent = document.createElement('div');
-    cardContent.className = 'card-content';
+    const cardDiv = document.createElement('div');
+    cardDiv.className = 'flex flex-col justify-between p-4 leading-normal'
+
+    //const cardContent = document.createElement('div');
+    //cardContent.className = 'card-content';
 
     const cardTitle = document.createElement('h2');
-    cardTitle.className = 'card-title';
+    cardTitle.className = 'mb-2 text-2xl font-bold tracking-tight text-gray-900';
+    console.log(recipe.title)
     cardTitle.textContent = recipe.title;
 
     const cardLink = document.createElement('a');
@@ -192,9 +197,10 @@ function createCard(recipe) {
     cardLink.textContent = 'View Recipe';
     cardLink.target = '_blank';
 
-    cardContent.appendChild(cardTitle);
-    cardContent.appendChild(cardLink);
-    card.appendChild(cardContent);
+    cardDiv.appendChild(cardTitle);
+    cardDiv.appendChild(cardLink);
+    card.appendChild(cardDiv);
+    //card.appendChild(cardContent);
 
     return card;
 }
@@ -211,7 +217,9 @@ function displayResults(data) {
         });
 }}
 
-
+card.addEventListener('click', (target) => {
+    console.log(target.cardTitle.value)
+})
 
 
 /*
@@ -257,32 +265,39 @@ filterSections.forEach((sectionId, index) => {
 });
 
 
+
 // Video search
-$(document).ready(function(){
-    var API_KEY = "AIzaSyDsy-oCrYD9qGw9tkzrSQ_Q1OX7QVU8oog";
+/*  var API_KEY = "AIzaSyDsy-oCrYD9qGw9tkzrSQ_Q1OX7QVU8oog";
     var video = '';
-/*
-    $("#form").submit(function (event) {
-        event.preventDefault();
+
+    var search = "recipe&nbsp" + "grape"
+    videoSearch(API_KEY, search, 1);
+    //$("#form").submit(function (event) {
+        //event.preventDefault();
         //var search = $("#search").val();
-        var search = 
-        videoSearch(API_KEY, search, 1);
-    });
-*/
+        
+    //});
+    */
+var API_KEY = "AIzaSyDsy-oCrYD9qGw9tkzrSQ_Q1OX7QVU8oog";
+var video = '';
+
+var search = "pizza"
+videoSearch(API_KEY, search, 1);
 
 // NEED FUNCTION TO HIDE SEARCH RESULTS AND DISPLAY SELECTED RECIPE ALONG WITH SELECTED YOUTUBE VIDEO    
     
     function videoSearch(key, search, maxResults) {
         // Clear previous content
-        $("#videos").empty();
+        $(".youtube-video").empty();
 
-        $.get("https://www.googleapis.com/youtube/v3/search?key=" + key + "&type=video&part=snippet&maxResults=" + maxResults + "&q=" + search, function(data) {
+        const url = "https://www.googleapis.com/youtube/v3/search?key=" + key + "&type=video&part=snippet&maxResults=" + maxResults + "&q=" + search
+        $.get(url, function(data) {
             console.log(data);
             data.items.forEach(item => {
                 video = `
                 <iframe width="250" height="250" src="http://www.youtube.com/embed/${item.id.videoId}" frameborder="0" allowfullscreen></iframe>
                 `;
-                $("#videos").append(video);
+                $(".youtube-video").append(video);
             });
         });
     }
