@@ -4,17 +4,19 @@ const searchBtn= document.getElementById("search-button")
 const searchInput= document.getElementById("search-input")
 const recipeContainer= document.querySelector(".recipes-api")
 const recipes = "";
+let recipeInfo = JSON.parse(localStorage.getItem("recipeInfo"));
+
 //const SPOONACULAR_API_KEY = "Yf6fde6b800mshe44c4d3edfcf41ap1ee82cjsn03452dcc2b8b";
 const SPOONACULAR_API_KEY = "f6fde6b800mshe44c4d3edfcf41ap1ee82cjsn03452dcc2b8b";
 const cardContainer = document.getElementById('card-container');
-
+/*
 // Object to store selected filters for each filter section- this for checkboxes
 const selectedFilters = {
     'filter-section-mobile-0': { color: [] },
     'filter-section-mobile-1': { category: [] },
     'filter-section-mobile-2': { size: [] }
 };
-
+*/
 const options = {
     method: 'GET',
     headers: {
@@ -26,7 +28,9 @@ const options = {
 // SEARCH FUNCTIONS
 
 async function searchRecipes(input) {
-    //input = "burger";
+    localStorage.clear();
+    recipeInfo = localStorage.getItem("recipeInfo")
+    // Filtering Variables
     const dietOptions = "";
     const intoleranceOptions = "";
     const typeOptions = "";
@@ -36,9 +40,10 @@ async function searchRecipes(input) {
     try {
 	    const response = await fetch(url, options);
 	    const data = await response.json();
-	    console.log(data);
-        displayResults(data);
-        
+        localStorage.setItem('recipeInfo', JSON.stringify(data));
+        recipeInfo = JSON.parse(localStorage.getItem('recipeInfo'))
+        displayResults();
+
     } catch (error) {
 	    console.error(error);
     }
@@ -46,81 +51,27 @@ async function searchRecipes(input) {
 
 // Take Recipe ID, return object
 async function returnRecipes(data, index) {
-    //const RecipeId = "1087629";
-    index = 3;
     const dataId = data.results[index].id;
+    const url = "https://spoonacular-recipe-food-nutrition-v1.p.rapidapi.com/recipes/" + dataId + "/information?includeNutrition=true";
     
-    //const url= `https://spoonacular-recipe-food-nutrition-v1.p.rapidapi.com/recipes/findByIngredients?ingredients=${ingredients}&number=5&ignorePantry=true&ranking=1`;
-    const url = "https://spoonacular-recipe-food-nutrition-v1.p.rapidapi.com/recipes/" + dataId + "}/information?includeNutrition=true";
-    
-    
-
     const response = await fetch(url, options);
     if (!response.ok) {
         throw new Error("Failed to fetch the recipe.");
     }
 
-    data = await response.json();
+    recipeData = await response.json();
     console.log(recipeData);
+    localStorage.setItem('recipeData', JSON.stringify(recipeData))
     return recipeData
     //displayRecipe(data)
 }
- /*function displayRecipe(data){
-
-    for (let i = 0; i < data.length; i++) {
-        
-        const card= document.createElement("div")
-        card.setAttribute("class", "card")
-        const cardHeader= document.createElement("div")
-        cardHeader.setAttribute("class", "card-header")
-        const cardBody= document.createElement("div")
-        cardBody.setAttribute("class", "card-body")
-        const img= document.createElement("img")
-        img.setAttribute("src", data[i].image)
-        const h2= document.createElement("h2")
-        const anchor= document.createElement("a")
-        anchor.setAttribute("href", "#")
-        anchor.setAttribute("value", data[i].title)
-        anchor.textContent=data[i].title
-        h2.append(anchor)
-        cardHeader.append(h2)
-        cardBody.append(img)
-        card.append(cardHeader, cardBody)
-        recipeContainer.append(card)
-    }*/
  
-
 // Search Button Click Detection
 searchBtn.addEventListener("click", ()=>{
     const userQuery= searchInput.value;
     searchRecipes(userQuery);
 })
 
-// Function for click on recipe card
-
-
-
-// ?????
-recipeContainer.addEventListener("click", ()=>{
-    const title= this.event.target.textContent
-    console.log(title);
-})
-
-/*
-function displayResults(recipes) {
-    recipes.forEach(recipe => {
-        const recipeDiv = document.createElement('div');
-        recipeDiv.innerHTML = `
-            <h2>${recipe.title}</h2>
-            <img src="${recipe.image}" alt="${recipe.title}">
-            <p>${recipe.summary}</p>
-            <a href="${recipe.sourceUrl}" target="_blank">View Full Recipe</a>
-            <br>
-            <button onclick="showDetails(${recipe.id})">Show More Details</button>
-        `;
-        resultsDiv.appendChild(recipeDiv);
-    });
-}*/
 
 // Function to load selected filters from local storage
 function loadSelectedFilters() {
@@ -169,86 +120,76 @@ function constructFilters(sectionId, filterType) {
 
 // Function to create a card element based on recipe data
 function createCard(recipe) {
+
+    // Card Element
     const card = document.createElement('a');
-    card.className = 'flex flex-col items-center bg-white border border-gray-200 rounded-lg shadow md:flex-row md:max-w-xl hover:bg-gray-100';
+    card.className = 'flex flex-col items-center bg-white border border-gray-200 rounded-lg shadow md:flex-row md:max-w-xl hover:bg-gray-100 card';
     card.href = './index2.html'
 
-    console.log(recipe.image);
+    // Image Element
     const cardImage = document.createElement('img');
     cardImage.className = 'card-image object-cover w-full rounded-t-lg h-96 md:h-auto md:w-48 md:rounded-none md:rounded-l-lg';
     cardImage.src = "https://spoonacular.com/recipeImages/" + recipe.image;
     cardImage.alt = 'Recipe Image';
     card.appendChild(cardImage);
 
+    // Card Content Div
     const cardDiv = document.createElement('div');
     cardDiv.className = 'flex flex-col justify-between p-4 leading-normal'
 
-    //const cardContent = document.createElement('div');
-    //cardContent.className = 'card-content';
-
+    // Card Header Element
     const cardTitle = document.createElement('h2');
     cardTitle.className = 'mb-2 text-2xl font-bold tracking-tight text-gray-900';
-    console.log(recipe.title)
     cardTitle.textContent = recipe.title;
 
+    // Card Recipe Link Element
     const cardLink = document.createElement('a');
     cardLink.className = 'card-link';
     cardLink.href = recipe.sourceUrl;
     cardLink.textContent = 'View Recipe';
     cardLink.target = '_blank';
 
+    // Card Assembly
     cardDiv.appendChild(cardTitle);
     cardDiv.appendChild(cardLink);
     card.appendChild(cardDiv);
-    //card.appendChild(cardContent);
 
     return card;
 }
 
 
-function displayResults(data) {
-    console.log(data.results);
-    if (data.results && Array.isArray(data.results)) {
+function displayResults() {
+    cardContainer.innerHTML = "";
+    console.log(recipeInfo.results);
+    if (recipeInfo.results && Array.isArray(recipeInfo.results)) {
         // Goes through the API results and create cards for each item
-        data.results.forEach(recipe => {
+        recipeInfo.results.forEach(recipe => {
             const card = createCard(recipe); 
             // Add the card to the card container
             cardContainer.appendChild(card);
         });
+
+        // Function for click on recipe card
+        const cards = document.querySelectorAll('.card');
+
+        cards.forEach((card, index) => {
+            console.log("setting event listener " + index);
+            card.addEventListener('click', function() {
+                console.log("Clicked");
+                localStorage.setItem('recipeIndex', index);
+                returnRecipes(recipeInfo, index);
+            })
+        })
 }}
 
-card.addEventListener('click', (target) => {
-    console.log(target.cardTitle.value)
-})
+
+
+
+
+
 
 
 /*
-// Fetch data from the API and display the cards
-fetch('https://spoonacular-recipe-food-nutrition-v1.p.rapidapi.com/recipes/complexSearch', {
-    headers: {
-        "X-RapidAPI-Key": SPOONACULAR_API_KEY
-    }
-})
-.then(response => response.json())
-.then(data => {
-    console.log(data);
-
-    if (data.results && Array.isArray(data.results)) {
-        // Goes through the API results and create cards for each item
-        data.results.forEach(recipe => {
-            const card = createCard(recipe); 
-            // Add the card to the card container
-            cardContainer.appendChild(card);
-        });
-    } else {
-        console.error('API response structure is not as expected:', data);
-    }
-})
-.catch(error => {
-    console.error('Error fetching data:', error);
-});*/
-
-
 // Attach event listeners to all sets of checkboxes
 const filterSections = ['filter-section-mobile-0', 'filter-section-mobile-1', 'filter-section-mobile-2'];
 const filterTypes = ['color', 'category', 'size'];
@@ -264,41 +205,4 @@ filterSections.forEach((sectionId, index) => {
     });
 });
 
-
-
-// Video search
-/*  var API_KEY = "AIzaSyDsy-oCrYD9qGw9tkzrSQ_Q1OX7QVU8oog";
-    var video = '';
-
-    var search = "recipe&nbsp" + "grape"
-    videoSearch(API_KEY, search, 1);
-    //$("#form").submit(function (event) {
-        //event.preventDefault();
-        //var search = $("#search").val();
-        
-    //});
-    */
-var API_KEY = "AIzaSyDsy-oCrYD9qGw9tkzrSQ_Q1OX7QVU8oog";
-var video = '';
-
-var search = "pizza"
-videoSearch(API_KEY, search, 1);
-
-// NEED FUNCTION TO HIDE SEARCH RESULTS AND DISPLAY SELECTED RECIPE ALONG WITH SELECTED YOUTUBE VIDEO    
-    
-    function videoSearch(key, search, maxResults) {
-        // Clear previous content
-        $(".youtube-video").empty();
-
-        const url = "https://www.googleapis.com/youtube/v3/search?key=" + key + "&type=video&part=snippet&maxResults=" + maxResults + "&q=" + search
-        $.get(url, function(data) {
-            console.log(data);
-            data.items.forEach(item => {
-                video = `
-                <iframe width="250" height="250" src="http://www.youtube.com/embed/${item.id.videoId}" frameborder="0" allowfullscreen></iframe>
-                `;
-                $(".youtube-video").append(video);
-            });
-        });
-    }
-});
+*/
