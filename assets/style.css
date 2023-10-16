@@ -38,6 +38,9 @@ body {
     color: #333;
     margin: 0;
     padding: 0;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
 }
 
 .container {
@@ -83,6 +86,13 @@ ul li {
     margin-bottom: 8px;
 }
 
+
+.youtube-video {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
 .youtube-video a {
     display: inline-block;
     background-color: #ff6347;
@@ -92,8 +102,13 @@ ul li {
     border-radius: 5px;
     font-size: 18px;
     transition: background-color 0.3s ease;
+
 }
 
 .youtube-video a:hover {
     background-color: #ff473e;
+}
+
+li {
+    font-size: 10px;
 }
