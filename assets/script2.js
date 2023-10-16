@@ -80,7 +80,7 @@ function videoSearch(key, search, maxResults) {
         console.log(data);
         data.items.forEach(item => {
             video = `
-            <iframe width="`+width+`" height="`+height+`" src="http://www.youtube.com/embed/${item.id.videoId}" frameborder="0" allowfullscreen></iframe>
+            <iframe width="`+width+`" height="`+height+`" src="https://www.youtube.com/embed/${item.id.videoId}" frameborder="0" allowfullscreen></iframe>
             `;
             $(".youtube-video").append(video);
         });
